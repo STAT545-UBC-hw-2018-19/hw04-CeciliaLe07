@@ -33,7 +33,7 @@ It is fine to work with a new dataset and/or create variations on these problem 
 | key       | country |
 | value     | lifeExp |
 
-This is an example of two countries wich are Mexico and Canada
+> This is an example of two countries wich are Mexico and Canada
 
 ``` r
 gapminder %>% 

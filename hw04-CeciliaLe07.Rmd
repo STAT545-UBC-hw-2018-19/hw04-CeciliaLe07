@@ -44,7 +44,7 @@ __Prompts__:
 | key       | country |
 | value     | lifeExp |
  
-This is an example of two countries wich are Mexico and Canada
+> This is an example of two countries wich are Mexico and Canada
 
 ```{r Activity 2 Example 1, warning = FALSE}
 gapminder %>% 
@@ -53,7 +53,7 @@ gapminder %>%
   spread(key="country", value = "lifeExp") %>% 
   kable()
 ```
-
+     
 > But we can do this by $n$ different countries, in the following example the `filter` criteria will change to the countries of Americas:
 
 ```{r Activity 2 Example 2, warning = FALSE}
