@@ -40,7 +40,7 @@ gapminder %>%
   filter(country == "Mexico" | country == "Canada") %>% 
   select(c("year","country","lifeExp")) %>% 
   spread(key="country", value = "lifeExp") %>% 
-  kable()
+  kable(escape =FALSE)
 ```
 
 <table>

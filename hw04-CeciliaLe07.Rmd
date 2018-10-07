@@ -51,7 +51,7 @@ gapminder %>%
   filter(country == "Mexico" | country == "Canada") %>% 
   select(c("year","country","lifeExp")) %>% 
   spread(key="country", value = "lifeExp") %>% 
-  kable()
+  kable(escape =FALSE)
 ```
      
 > But we can do this by $n$ different countries, in the following example the `filter` criteria will change to the countries of Americas:
