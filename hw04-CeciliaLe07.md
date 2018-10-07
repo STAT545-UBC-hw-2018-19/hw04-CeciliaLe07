@@ -26,14 +26,14 @@ It is fine to work with a new dataset and/or create variations on these problem 
     -   Use `knitr::kable()` to make this table look pretty in your rendered homework.
     -   Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
 
-> In this case, gapminder is presented in **untidy** format and we need to convert it to a **tidy** object by the command `spread` with the following parameters:
+In this case, gapminder is presented in **untidy** format and we need to convert it to a **tidy** object by the command `spread` with the following parameters:
 
 | Paramater | Value   |
 |-----------|---------|
 | key       | country |
 | value     | lifeExp |
 
-> This is an example of two countries wich are Mexico and Canada
+This is an example of two countries wich are Mexico and Canada
 
 ``` r
 gapminder %>% 
