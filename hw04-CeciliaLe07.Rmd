@@ -1,0 +1,232 @@
+---
+title: 'Homework 04: Tidy data and joins'
+author: "Cecilia Leon"
+output: github_document
+always_allow_html: yes
+---
+  
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(gapminder)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The Assignment
+
+This is a "choose your own adventure"-style assignment, where you are expected to do the following two things:
+
+1. Pick one of the data reshaping prompts and do it.
+2. Pick one of the join prompts and do it.
+
+It is fine to work with a new dataset and/or create variations on these problem themes.
+
+### Data Reshaping Prompts (and relationship to aggregation)
+
+__Problem__: You have data in one "shape" but you wish it were in another. Usually this is because the alternative shape is superior for presenting a table, making a figure, or doing aggregation and statistical analysis.
+
+__Solution__: Reshape your data. For simple reshaping, `gather()` and `spread()` from `tidyr` will suffice. Do the thing that is possible / easier now that your data has a new shape.
+
+__Prompts__:
+
+#### Activity #2
+
+* Make a tibble with one row per year and columns for life expectancy for two or more countries.
+    - Use `knitr::kable()` to make this table look pretty in your rendered homework.
+    - Take advantage of this new data shape to scatterplot life expectancy for one country against that of another.
+
+> In this case, gapminder is presented in **untidy** format and we need to convert it to a **tidy** object by the command `spread` with the following parameters:
+
+| Paramater | Value   |
+|-----------|---------|
+| key       | country |
+| value     | lifeExp |
+ 
+This is an example of two countries wich are Mexico and Canada
+
+```{r Activity 2 Example 1, warning = FALSE}
+gapminder %>% 
+  filter(country == "Mexico" | country == "Canada") %>% 
+  select(c("year","country","lifeExp")) %>% 
+  spread(key="country", value = "lifeExp") %>% 
+  kable()
+```
+
+> But we can do this by $n$ different countries, in the following example the `filter` criteria will change to the countries of Americas:
+
+```{r Activity 2 Example 2, warning = FALSE}
+Americas_reshape <- gapminder %>% 
+                      filter(continent == "Americas") %>% 
+                      select(c("year","country","lifeExp")) %>% 
+                      spread(key="country", value = "lifeExp") 
+
+Americas_reshape%>%
+  kable()
+```
+
+> Now we can take advantage of this new data shape for showing the evolution of life expectancy from 1952 to 2007 in the an especific country:
+
+```{r Activity 2 Graph 1}
+Americas_reshape %>% 
+  ggplot(aes(year,Cuba)) +
+  geom_line(col="skyblue") +
+  geom_point(col="slateblue", alpha = 0.5) +
+  ggtitle("Time series of life Expectancy of Cuba") +
+  xlab("Year") +
+  ylab("Life Expectancy\n(in years)")
+```
+
+> This new shape could be useful in case we want to built a function that draws the life expectancy time series for an indicated particular country.
+
+<!-- Using aes_string instead of aes is very useful for applied ggplot in functions, to know this I consulted the next link: https://stackoverflow.com/questions/15458526/r-pass-variable-column-indices-to-ggplot2 --> 
+```{r Activity 2 Function}
+#This funcion recives as input the name of certain country which is desired to know the life expectancy behaviour since 1952 to 2007 and generates the corresponding graph.
+
+draw_life_expectancy <- function(my_country){
+  Americas_reshape %>% 
+  ggplot(aes_string("year",my_country)) +
+  geom_line(col="skyblue") +
+  geom_point(col="slateblue", alpha = 0.5) +
+  ggtitle(paste("Time series of life Expectancy of",my_country)) +
+  xlab("Year") +
+  ylab("Life Expectancy\n(in years)")
+}
+```
+
+> For instance, the outpout of previous function applied to Brazil is:
+
+```{r Example_Brazil}
+draw_life_expectancy("Brazil")
+```
+
+> The output for Argentina is:
+
+```{r Example_Argentina}
+draw_life_expectancy("Argentina")
+```
+
+#### Activity 4
+
+* In [Window functions](http://stat545.com/block010_dplyr-end-single-table.html#window-functions), we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year * continent combination.
+
+> The table for Asia was
+
+```{r Activity 4 untidy data}
+table <- gapminder %>%
+  filter(continent == "Asia") %>%
+  select(year, country, lifeExp) %>%
+  group_by(year) %>%
+  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+  arrange(year)
+
+table %>% 
+  kable()
+```
+
+> For reshaping it in order to have one row per year, we can use `spread` command with the following parameters:
+
+| Paramater | Value   |
+|-----------|---------|
+| key       | country |
+| value     | lifeExp |
+ 
+
+```{r Activity 4 tidy data}
+spread(table, key="country",value="lifeExp") %>% 
+  kable()
+```
+
+### Join Prompts (join, merge, look up)
+
+__Problem__: You have two data sources and you need info from both in one new data object.
+
+__Solution__: Perform a __join__, which borrows terminology from the database world, specifically SQL.
+
+__Prompts__:
+
+#### Activity 1
+
+* Create a second data frame, complementary to Gapminder. Join this with (part of) Gapminder using a `dplyr` join function and make some observations about the process and result. Explore the different types of joins. Examples of a second data frame you could build:
+    - One row per country, a country variable and one or more variables with extra info, such as language spoken, NATO membership, national animal, or capitol city.
+    - One row per continent, a continent variable and one or more variables with extra info, such as northern versus southern hemisphere.
+
+> The second data frame we are going to use was obtained at [this link](https://www.kaggle.com/folaraz/world-countries-and-continents-details/version/3#_=_), it has one row per country and is in csv format, so we can use `read_csv` command:
+
+```{r Join Exercise 1, warning = FALSE}
+#In this case, if the following line is desired to be run, it is necessary to download the Countries Longitude and Latitude.csv file and change to the corresponding path
+second_df <- read_csv("C:\\Users\\Cecy\\Documents\\UBC\\Term 1\\545\\hw04-CeciliaLe07\\Countries Longitude and Latitude.csv")
+str(second_df)
+```
+> As we can see, the second data frame has 4 variables wich called: X1, longitud, latitude and name. Furthemore this data frame owns 249 observation that corresponds to data of different countries. First of all, we are going to check how many countries are in common between `gapminder` and `second_df`.
+
+```{r renaming, warning = FALSE}
+#To make the reasoning easier, we only will use data of 2007 in gapminder
+my_gap <- gapminder %>% 
+  filter(year == "2007")
+
+#Renaming columns on second_df
+colnames(second_df)<-c("x","longitud","latitude","country")
+sum(second_df$country %in% my_gap$country)
+```
+
+> As we can see, there are 127 countries on the second data frame that are also on `gapminder`. The following table shows what are these countries:
+
+```{r table_common_countries, warning = FALSE}
+second_df$country[second_df$country %in% my_gap$country] %>% 
+  kable(col.names=c("Common countries"))
+```
+
+> It is very important to know that not all countries on both data frames are in common, since this fact will change the results of a join declaration. Let's illutatre this:
+
+```{r full_join, warning = FALSE}
+head(full_join(second_df, my_gap, by = "country")) %>% 
+  kable()
+
+dim(full_join(second_df, my_gap, by = "country"))
+```
+
+> As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has 264 rows. This quantity should correspond to the sum of the number of rows of each data frame. We can check that statement by:
+
+```{r check_full_join, warning = FALSE}
+nrow(second_df) + nrow(my_gap) - 127
+```
+
+```{r inner_join, warning = FALSE}
+head(inner_join(second_df, my_gap, by = "country")) %>% 
+  kable()
+
+dim(inner_join(second_df, my_gap, by = "country"))
+```
+
+> As `inner_join` keeps only rows that has the same country in both data frames, the dimension of this joined data frame indicates it has 127 rows. We deducted this quantity when checked the number of common countries between tibbles.
+
+
+```{r left_join, warning = FALSE}
+head(left_join(second_df, my_gap, by = "country")) %>% 
+  kable()
+
+dim(left_join(second_df, my_gap, by = "country"))
+```
+
+> As `left_join` keeps all rows of the first passed data frame, the dimension of this joined data frame indicates it has 249 rows. This quantity corresponds to the number of rows in `second_df`.
+
+
+```{r right_join, warning = FALSE}
+head(right_join(second_df, my_gap, by = "country")) %>% 
+  kable()
+
+dim(right_join(second_df, my_gap, by = "country"))
+```
+
+> As `rigth_join` keeps all rows of the second passed data frame, the dimension of this joined data frame indicates it has 142 rows. This quantity corresponds to the number of rows in `my_gap`.
+
+> **Some observations:** The previous exercises helped us to understand the importance of knowing the differences between these kind of join commands, since we need to decide what is the correct function depending on the data we want to illustrate. For example:
+
+> + If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud  and life expectancy variables.
+
+> + If we need to calculate the mean, or median for the life expectancy of each variable, we should have all the records of `lifeExp` variable regardless we know the location of that countries.
+
+> + It is likely the same country are in both tibbles, but if they are not identical, the join will lose that country. For example: if Mexico is on `second_df` and méxico is on `my_gap`, that are considered different countries. It could be more convenient to have a different kind of codification on the coulms we want to join by, for example "MX".
+
