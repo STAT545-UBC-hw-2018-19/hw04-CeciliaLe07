@@ -1,7 +1,7 @@
 ---
 title: 'Homework 04: Tidy data and joins'
 author: "Cecilia Leon"
-output: github_document
+output: html_document
 always_allow_html: yes
 ---
   
@@ -51,8 +51,10 @@ gapminder %>%
   filter(country == "Mexico" | country == "Canada") %>% 
   select(c("year","country","lifeExp")) %>% 
   spread(key="country", value = "lifeExp") %>% 
-  kable(escape =FALSE)
+  kable()
 ```
+     
+                                                                                                                  
      
 > But we can do this by $n$ different countries, in the following example the `filter` criteria will change to the countries of Americas:
 
