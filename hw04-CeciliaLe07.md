@@ -40,83 +40,159 @@ gapminder %>%
   filter(country == "Mexico" | country == "Canada") %>% 
   select(c("year","country","lifeExp")) %>% 
   spread(key="country", value = "lifeExp") %>% 
-  kable() %>% 
-  print(n=Inf)
+  kable() 
 ```
 
-    ## <table>
-    ##  <thead>
-    ##   <tr>
-    ##    <th style="text-align:right;"> year </th>
-    ##    <th style="text-align:right;"> Canada </th>
-    ##    <th style="text-align:right;"> Mexico </th>
-    ##   </tr>
-    ##  </thead>
-    ## <tbody>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1952 </td>
-    ##    <td style="text-align:right;"> 68.750 </td>
-    ##    <td style="text-align:right;"> 50.789 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1957 </td>
-    ##    <td style="text-align:right;"> 69.960 </td>
-    ##    <td style="text-align:right;"> 55.190 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1962 </td>
-    ##    <td style="text-align:right;"> 71.300 </td>
-    ##    <td style="text-align:right;"> 58.299 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1967 </td>
-    ##    <td style="text-align:right;"> 72.130 </td>
-    ##    <td style="text-align:right;"> 60.110 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1972 </td>
-    ##    <td style="text-align:right;"> 72.880 </td>
-    ##    <td style="text-align:right;"> 62.361 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1977 </td>
-    ##    <td style="text-align:right;"> 74.210 </td>
-    ##    <td style="text-align:right;"> 65.032 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1982 </td>
-    ##    <td style="text-align:right;"> 75.760 </td>
-    ##    <td style="text-align:right;"> 67.405 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1987 </td>
-    ##    <td style="text-align:right;"> 76.860 </td>
-    ##    <td style="text-align:right;"> 69.498 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1992 </td>
-    ##    <td style="text-align:right;"> 77.950 </td>
-    ##    <td style="text-align:right;"> 71.455 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 1997 </td>
-    ##    <td style="text-align:right;"> 78.610 </td>
-    ##    <td style="text-align:right;"> 73.670 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 2002 </td>
-    ##    <td style="text-align:right;"> 79.770 </td>
-    ##    <td style="text-align:right;"> 74.902 </td>
-    ##   </tr>
-    ##   <tr>
-    ##    <td style="text-align:right;"> 2007 </td>
-    ##    <td style="text-align:right;"> 80.653 </td>
-    ##    <td style="text-align:right;"> 76.195 </td>
-    ##   </tr>
-    ## </tbody>
-    ## </table>
-
-> But we can do this by *n* different countries, in the following example the `filter` criteria will change to the countries of Americas:
+<table>
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+Canada
+</th>
+<th style="text-align:right;">
+Mexico
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1952
+</td>
+<td style="text-align:right;">
+68.750
+</td>
+<td style="text-align:right;">
+50.789
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1957
+</td>
+<td style="text-align:right;">
+69.960
+</td>
+<td style="text-align:right;">
+55.190
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1962
+</td>
+<td style="text-align:right;">
+71.300
+</td>
+<td style="text-align:right;">
+58.299
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1967
+</td>
+<td style="text-align:right;">
+72.130
+</td>
+<td style="text-align:right;">
+60.110
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1972
+</td>
+<td style="text-align:right;">
+72.880
+</td>
+<td style="text-align:right;">
+62.361
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1977
+</td>
+<td style="text-align:right;">
+74.210
+</td>
+<td style="text-align:right;">
+65.032
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1982
+</td>
+<td style="text-align:right;">
+75.760
+</td>
+<td style="text-align:right;">
+67.405
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1987
+</td>
+<td style="text-align:right;">
+76.860
+</td>
+<td style="text-align:right;">
+69.498
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1992
+</td>
+<td style="text-align:right;">
+77.950
+</td>
+<td style="text-align:right;">
+71.455
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1997
+</td>
+<td style="text-align:right;">
+78.610
+</td>
+<td style="text-align:right;">
+73.670
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2002
+</td>
+<td style="text-align:right;">
+79.770
+</td>
+<td style="text-align:right;">
+74.902
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2007
+</td>
+<td style="text-align:right;">
+80.653
+</td>
+<td style="text-align:right;">
+76.195
+</td>
+</tr>
+</tbody>
+</table>
+But we can do this by n&gt;2 different countries, in the following example, the filter criteria will change to the countries of Americas:
 
 ``` r
 Americas_reshape <- gapminder %>% 
@@ -1174,7 +1250,7 @@ Venezuela
 </tr>
 </tbody>
 </table>
-> Now we can take advantage of this new data shape for showing the evolution of life expectancy from 1952 to 2007 in the an especific country:
+Now we can take advantage of this new data shape for showing the evolution of life expectancy from 1952 to 2007 in the an especific country:
 
 ``` r
 Americas_reshape %>% 
@@ -1188,7 +1264,7 @@ Americas_reshape %>%
 
 ![](hw04-CeciliaLe07_files/figure-markdown_github/Activity%202%20Graph%201-1.png)
 
-> This new shape could be useful in case we want to built a function that draws the life expectancy time series for an indicated particular country.
+This new shape could be useful in case we want to built a function that draws the life expectancy time series for an indicated particular country.
 
 <!-- Using aes_string instead of aes is very useful for applied ggplot in functions, to know this I consulted the next link: https://stackoverflow.com/questions/15458526/r-pass-variable-column-indices-to-ggplot2 -->
 ``` r
@@ -1205,7 +1281,7 @@ draw_life_expectancy <- function(my_country){
 }
 ```
 
-> For instance, the outpout of previous function applied to Brazil is:
+For instance, the outpout of previous function applied to Brazil is:
 
 ``` r
 draw_life_expectancy("Brazil")
@@ -1213,7 +1289,7 @@ draw_life_expectancy("Brazil")
 
 ![](hw04-CeciliaLe07_files/figure-markdown_github/Example_Brazil-1.png)
 
-> The output for Argentina is:
+The output for Argentina is:
 
 ``` r
 draw_life_expectancy("Argentina")
@@ -1225,7 +1301,7 @@ draw_life_expectancy("Argentina")
 
 -   In [Window functions](http://stat545.com/block010_dplyr-end-single-table.html#window-functions), we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year \* continent combination.
 
-> The table for Asia was
+The table for Asia was
 
 ``` r
 table <- gapminder %>%
@@ -1520,7 +1596,7 @@ Japan
 </tr>
 </tbody>
 </table>
-> For reshaping it in order to have one row per year, we can use `spread` command with the following parameters:
+Then, For reshaping it in order to have one row per year. W We can use `spread` command with the following parameters:
 
 | Paramater | Value   |
 |-----------|---------|
@@ -1773,7 +1849,7 @@ NA
     -   One row per country, a country variable and one or more variables with extra info, such as language spoken, NATO membership, national animal, or capitol city.
     -   One row per continent, a continent variable and one or more variables with extra info, such as northern versus southern hemisphere.
 
-> The second data frame we are going to use was obtained at [this link](https://www.kaggle.com/folaraz/world-countries-and-continents-details/version/3#_=_), it has one row per country and is in csv format, so we can use `read_csv` command:
+The second data frame we are going to use was obtained at [this link](https://www.kaggle.com/folaraz/world-countries-and-continents-details/version/3#_=_), it has one row per country and is in csv format, so we can use `read_csv` command:
 
 ``` r
 #In this case, if the following line is desired to be run, it is necessary to download the Countries Longitude and Latitude.csv file and change to the corresponding path
@@ -1811,7 +1887,7 @@ str(second_df)
     ##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
     ##   ..- attr(*, "class")= chr "col_spec"
 
-> As we can see, the second data frame has 4 variables wich called: X1, longitud, latitude and name. Furthemore this data frame owns 249 observation that corresponds to data of different countries. First of all, we are going to check how many countries are in common between `gapminder` and `second_df`.
+As we can see, the second data frame has 4 variables wich called: X1, longitud, latitude and name. Furthemore this data frame owns 249 observation that corresponds to data of different countries. First of all, we are going to check how many countries are in common between `gapminder` and `second_df`.
 
 ``` r
 #To make the reasoning easier, we only will use data of 2007 in gapminder
@@ -1825,7 +1901,7 @@ sum(second_df$country %in% my_gap$country)
 
     ## [1] 127
 
-> As we can see, there are 127 countries on the second data frame that are also on `gapminder`. The following table shows what are these countries:
+As we can see, there are 127 countries on the second data frame that are also on `gapminder`. The following table shows what are these countries:
 
 ``` r
 second_df$country[second_df$country %in% my_gap$country] %>% 
@@ -2478,7 +2554,7 @@ Zimbabwe
 </tr>
 </tbody>
 </table>
-> It is very important to know that not all countries on both data frames are in common, since this fact will change the results of a join declaration. Let's illutatre this:
+It is very important to know that not all countries on both data frames are in common, since this fact will change the results of a join declaration. Let's illutatre this:
 
 ``` r
 head(full_join(second_df, my_gap, by = "country")) %>% 
@@ -2700,7 +2776,7 @@ dim(full_join(second_df, my_gap, by = "country"))
 
     ## [1] 264   9
 
-> As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has 264 rows. This quantity should correspond to the sum of the number of rows of each data frame. We can check that statement by:
+As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has 264 rows. This quantity should correspond to the sum of the number of rows of each data frame. We can check that statement by:
 
 ``` r
 nrow(second_df) + nrow(my_gap) - 127
@@ -2928,7 +3004,7 @@ dim(inner_join(second_df, my_gap, by = "country"))
 
     ## [1] 127   9
 
-> As `inner_join` keeps only rows that has the same country in both data frames, the dimension of this joined data frame indicates it has 127 rows. We deducted this quantity when checked the number of common countries between tibbles.
+As `inner_join` keeps only rows that has the same country in both data frames, the dimension of this joined data frame indicates it has 127 rows. We deducted this quantity when checked the number of common countries between tibbles.
 
 ``` r
 head(left_join(second_df, my_gap, by = "country")) %>% 
@@ -3150,7 +3226,7 @@ dim(left_join(second_df, my_gap, by = "country"))
 
     ## [1] 249   9
 
-> As `left_join` keeps all rows of the first passed data frame, the dimension of this joined data frame indicates it has 249 rows. This quantity corresponds to the number of rows in `second_df`.
+As `left_join` keeps all rows of the first passed data frame, the dimension of this joined data frame indicates it has 249 rows. This quantity corresponds to the number of rows in `second_df`.
 
 ``` r
 head(right_join(second_df, my_gap, by = "country")) %>% 
@@ -3372,12 +3448,12 @@ dim(right_join(second_df, my_gap, by = "country"))
 
     ## [1] 142   9
 
-> As `rigth_join` keeps all rows of the second passed data frame, the dimension of this joined data frame indicates it has 142 rows. This quantity corresponds to the number of rows in `my_gap`.
+As `rigth_join` keeps all rows of the second passed data frame, the dimension of this joined data frame indicates it has 142 rows. This quantity corresponds to the number of rows in `my_gap`.
 
-> **Some observations:** The previous exercises helped us to understand the importance of knowing the differences between these kind of join commands, since we need to decide what is the correct function depending on the data we want to illustrate. For example:
+**Some observations:** The previous exercises helped us to understand the importance of knowing the differences between these kind of join commands, since we need to decide what is the correct function depending on the data we want to illustrate. For example:
 
-> -   If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud and life expectancy variables.
+-   If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud and life expectancy variables.
 
-> -   If we need to calculate the mean, or median for the life expectancy of each variable, we should have all the records of `lifeExp` variable regardless we know the location of that countries.
+-   If we need to calculate the mean, or median for the life expectancy of each variable, we should have all the records of `lifeExp` variable regardless we know the location of that countries.
 
-> -   It is likely the same country are in both tibbles, but if they are not identical, the join will lose that country. For example: if Mexico is on `second_df` and méxico is on `my_gap`, that are considered different countries. It could be more convenient to have a different kind of codification on the coulms we want to join by, for example "MX".
+-   It is likely the same country are in both tibbles, but if they are not identical, the join will lose that country. For example: if Mexico is on `second_df` and méxico is on `my_gap`, that are considered different countries. It could be more convenient to have a different kind of codification on the coulms we want to join by, for example "MX".
