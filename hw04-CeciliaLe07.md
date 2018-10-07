@@ -3462,8 +3462,8 @@ As `rigth_join` keeps all rows of the second passed data frame, the dimension of
 
 **Some observations:** The previous exercises helped us to understand the importance of knowing the differences between these kind of join commands, since we need to decide what is the correct function depending on the data we want to illustrate. For example:
 
--   If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud and life expectancy variables (`inner_join`).
+-   If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud and life expectancy variables (*inner\_join*).
 
--   If we need to calculate the mean, or median for the life expectancy of each variable, we should have all the records of `lifeExp` variable regardless wether we know the location of that countries (`rigth_join`).
+-   If we need to calculate the mean, or median for the life expectancy of each variable, we should have all the records of `lifeExp` variable regardless wether we know the location of that countries (*rigth\_join*).
 
--   It is likely the same country are in both tibbles, but if they are not identical, the join operation will lose that country. For example: if Mexico is on `second_df` and méxico is on `my_gap`, that are considered different countries. It could be more convenient to have a different kind of codification on the columns we want to join by, for example `MX`.
+-   It is likely the same country are in both tibbles, but if they are not identical, the join operation will lose that country. For example: if **Mexico** is on `second_df` and **méxico** is on `my_gap`, that are considered different countries. It could be more convenient to have a different kind of codification on the columns we want to join by, for example `MX`.
