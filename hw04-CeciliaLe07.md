@@ -1889,7 +1889,7 @@ str(second_df)
     ##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
     ##   ..- attr(*, "class")= chr "col_spec"
 
-As we can see, the second data frame has 4 variables wich called: X1, longitud, latitude and name. Furthemore this data frame owns 249 observation that corresponds to data of different countries. First of all, we are going to check how many countries are in common between `gapminder` and `second_df`.
+As we can see, the second data frame has 4 variables wich called: X1, longitud, latitude and name. Furthemore this data frame owns 249 observation that corresponds to data of different countries. First of all, we are going to check how many countries are in common between `my_gap` and `second_df`.
 
 ``` r
 #To make the reasoning easier, we only will use data of 2007 in gapminder
@@ -1903,7 +1903,7 @@ sum(second_df$country %in% my_gap$country)
 
     ## [1] 127
 
-As we can see, there are 127 countries on the second data frame that are also on `gapminder`. The following table shows what are these countries:
+As we can see, there are 127 countries on the second data frame that are also on `my_gap`. The following table shows what are these countries:
 
 ``` r
 second_df$country[second_df$country %in% my_gap$country] %>% 
@@ -2772,7 +2772,7 @@ Africa
 </tr>
 </tbody>
 </table>
-To know the dimension if result:
+To know the dimension of result:
 
 ``` r
 dim(full_join(second_df, my_gap, by = "country"))
@@ -3462,8 +3462,8 @@ As `rigth_join` keeps all rows of the second passed data frame, the dimension of
 
 **Some observations:** The previous exercises helped us to understand the importance of knowing the differences between these kind of join commands, since we need to decide what is the correct function depending on the data we want to illustrate. For example:
 
--   If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud and life expectancy variables.
+-   If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud and life expectancy variables (`inner_join`).
 
--   If we need to calculate the mean, or median for the life expectancy of each variable, we should have all the records of `lifeExp` variable regardless we know the location of that countries.
+-   If we need to calculate the mean, or median for the life expectancy of each variable, we should have all the records of `lifeExp` variable regardless wether we know the location of that countries (`rigth_join`).
 
--   It is likely the same country are in both tibbles, but if they are not identical, the join will lose that country. For example: if Mexico is on `second_df` and méxico is on `my_gap`, that are considered different countries. It could be more convenient to have a different kind of codification on the coulms we want to join by, for example "MX".
+-   It is likely the same country are in both tibbles, but if they are not identical, the join operation will lose that country. For example: if Mexico is on `second_df` and méxico is on `my_gap`, that are considered different countries. It could be more convenient to have a different kind of codification on the columns we want to join by, for example `MX`.
