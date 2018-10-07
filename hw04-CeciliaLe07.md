@@ -1596,7 +1596,7 @@ Japan
 </tr>
 </tbody>
 </table>
-Then, for reshaping it in order to have one row per year. We can use `spread` command with the following parameters:
+Then, for reshaping it in order to have one row per year, We can use do the same process as in the previous exercise using following parameters:
 
 | Paramater | Value   |
 |-----------|---------|
