@@ -1301,7 +1301,7 @@ draw_life_expectancy("Argentina")
 
 -   In [Window functions](http://stat545.com/block010_dplyr-end-single-table.html#window-functions), we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year \* continent combination.
 
-The table for Asia was
+The table for Asia was:
 
 ``` r
 table <- gapminder %>%
