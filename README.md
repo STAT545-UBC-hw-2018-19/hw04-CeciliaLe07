@@ -6,6 +6,7 @@ This repository is comprised by the following files:
 |--------|---------|
 |[hw04-CeciliaLe07.Rmd](https://github.com/STAT545-UBC-students/hw04-CeciliaLe07/blob/master/hw04-CeciliaLe07.Rmd) | The RMarkdown document with the solved exercises for this assigment |
 |[hw04-CeciliaLe07.md](https://github.com/STAT545-UBC-students/hw04-CeciliaLe07/blob/master/hw04-CeciliaLe07.md)  | The rendered github RMarkdown document    |
+| [Countries Longitude and Latitude.csv](https://github.com/STAT545-UBC-students/hw04-CeciliaLe07/blob/master/Countries%20Longitude%20and%20Latitude.csv) | The data frame for join with gapminder by country |
 |[hw04-CeciliaLe07_files/figure-markdown_github](https://github.com/STAT545-UBC-students/hw04-CeciliaLe07/tree/master/hw04-CeciliaLe07_files/figure-markdown_github)	| Contains graphs of the exercises |
 
 Furthermore, these are the main sources I used:
