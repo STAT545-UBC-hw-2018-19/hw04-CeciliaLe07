@@ -11,7 +11,7 @@ This repository is comprised by the following files:
 
 Furthermore, these are the main sources I used:
 
-+ For get data about different countries: 
++ To get data about different countries: 
   
   https://www.kaggle.com/folaraz/world-countries-and-continents-details/version/3#_=_
   
