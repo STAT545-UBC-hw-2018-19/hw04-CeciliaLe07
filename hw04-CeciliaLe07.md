@@ -40,158 +40,82 @@ gapminder %>%
   filter(country == "Mexico" | country == "Canada") %>% 
   select(c("year","country","lifeExp")) %>% 
   spread(key="country", value = "lifeExp") %>% 
-  kable()
+  kable() %>% 
+  print(n=Inf)
 ```
 
-<table>
-<thead>
-<tr>
-<th style="text-align:right;">
-year
-</th>
-<th style="text-align:right;">
-Canada
-</th>
-<th style="text-align:right;">
-Mexico
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1952
-</td>
-<td style="text-align:right;">
-68.750
-</td>
-<td style="text-align:right;">
-50.789
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1957
-</td>
-<td style="text-align:right;">
-69.960
-</td>
-<td style="text-align:right;">
-55.190
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1962
-</td>
-<td style="text-align:right;">
-71.300
-</td>
-<td style="text-align:right;">
-58.299
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1967
-</td>
-<td style="text-align:right;">
-72.130
-</td>
-<td style="text-align:right;">
-60.110
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1972
-</td>
-<td style="text-align:right;">
-72.880
-</td>
-<td style="text-align:right;">
-62.361
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1977
-</td>
-<td style="text-align:right;">
-74.210
-</td>
-<td style="text-align:right;">
-65.032
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1982
-</td>
-<td style="text-align:right;">
-75.760
-</td>
-<td style="text-align:right;">
-67.405
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1987
-</td>
-<td style="text-align:right;">
-76.860
-</td>
-<td style="text-align:right;">
-69.498
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1992
-</td>
-<td style="text-align:right;">
-77.950
-</td>
-<td style="text-align:right;">
-71.455
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1997
-</td>
-<td style="text-align:right;">
-78.610
-</td>
-<td style="text-align:right;">
-73.670
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2002
-</td>
-<td style="text-align:right;">
-79.770
-</td>
-<td style="text-align:right;">
-74.902
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2007
-</td>
-<td style="text-align:right;">
-80.653
-</td>
-<td style="text-align:right;">
-76.195
-</td>
-</tr>
-</tbody>
-</table>
+    ## <table>
+    ##  <thead>
+    ##   <tr>
+    ##    <th style="text-align:right;"> year </th>
+    ##    <th style="text-align:right;"> Canada </th>
+    ##    <th style="text-align:right;"> Mexico </th>
+    ##   </tr>
+    ##  </thead>
+    ## <tbody>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1952 </td>
+    ##    <td style="text-align:right;"> 68.750 </td>
+    ##    <td style="text-align:right;"> 50.789 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1957 </td>
+    ##    <td style="text-align:right;"> 69.960 </td>
+    ##    <td style="text-align:right;"> 55.190 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1962 </td>
+    ##    <td style="text-align:right;"> 71.300 </td>
+    ##    <td style="text-align:right;"> 58.299 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1967 </td>
+    ##    <td style="text-align:right;"> 72.130 </td>
+    ##    <td style="text-align:right;"> 60.110 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1972 </td>
+    ##    <td style="text-align:right;"> 72.880 </td>
+    ##    <td style="text-align:right;"> 62.361 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1977 </td>
+    ##    <td style="text-align:right;"> 74.210 </td>
+    ##    <td style="text-align:right;"> 65.032 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1982 </td>
+    ##    <td style="text-align:right;"> 75.760 </td>
+    ##    <td style="text-align:right;"> 67.405 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1987 </td>
+    ##    <td style="text-align:right;"> 76.860 </td>
+    ##    <td style="text-align:right;"> 69.498 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1992 </td>
+    ##    <td style="text-align:right;"> 77.950 </td>
+    ##    <td style="text-align:right;"> 71.455 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 1997 </td>
+    ##    <td style="text-align:right;"> 78.610 </td>
+    ##    <td style="text-align:right;"> 73.670 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 2002 </td>
+    ##    <td style="text-align:right;"> 79.770 </td>
+    ##    <td style="text-align:right;"> 74.902 </td>
+    ##   </tr>
+    ##   <tr>
+    ##    <td style="text-align:right;"> 2007 </td>
+    ##    <td style="text-align:right;"> 80.653 </td>
+    ##    <td style="text-align:right;"> 76.195 </td>
+    ##   </tr>
+    ## </tbody>
+    ## </table>
+
 > But we can do this by *n* different countries, in the following example the `filter` criteria will change to the countries of Americas:
 
 ``` r
