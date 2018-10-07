@@ -192,7 +192,7 @@ Mexico
 </tr>
 </tbody>
 </table>
-But we can do this by n&gt;2 different countries, in the following example, the filter criteria will change to the countries of Americas:
+But we can do this by n different countries, in the following example, the filter criteria will change to the countries of Americas:
 
 ``` r
 Americas_reshape <- gapminder %>% 
@@ -1596,7 +1596,7 @@ Japan
 </tr>
 </tbody>
 </table>
-Then, For reshaping it in order to have one row per year. W We can use `spread` command with the following parameters:
+Then, For reshaping it in order to have one row per year. We can use `spread` command with the following parameters:
 
 | Paramater | Value   |
 |-----------|---------|
@@ -2770,6 +2770,8 @@ Africa
 </tr>
 </tbody>
 </table>
+To know the dimension if result:
+
 ``` r
 dim(full_join(second_df, my_gap, by = "country"))
 ```
@@ -2998,6 +3000,8 @@ Oceania
 </tr>
 </tbody>
 </table>
+To know the dimesion of result
+
 ``` r
 dim(inner_join(second_df, my_gap, by = "country"))
 ```
@@ -3220,6 +3224,8 @@ Africa
 </tr>
 </tbody>
 </table>
+To know the dimension of result
+
 ``` r
 dim(left_join(second_df, my_gap, by = "country"))
 ```
@@ -3442,6 +3448,8 @@ Oceania
 </tr>
 </tbody>
 </table>
+To know the dimension of result
+
 ``` r
 dim(right_join(second_df, my_gap, by = "country"))
 ```

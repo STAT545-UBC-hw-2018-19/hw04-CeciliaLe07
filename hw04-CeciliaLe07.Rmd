@@ -54,7 +54,7 @@ gapminder %>%
   kable() 
 ```
      
-But we can do this by n>2 different countries, in the following example, the filter criteria will change to the countries of Americas:
+But we can do this by n different countries, in the following example, the filter criteria will change to the countries of Americas:
 
 ```{r Activity 2 Example 2, warning = FALSE}
 Americas_reshape <- gapminder %>% 
@@ -125,8 +125,7 @@ table %>%
   kable()
 ```
 
-Then, For reshaping it in order to have one row per year. W
-We can use `spread` command with the following parameters:
+Then, For reshaping it in order to have one row per year. We can use `spread` command with the following parameters:
 
 | Paramater | Value   |
 |-----------|---------|
@@ -185,7 +184,11 @@ It is very important to know that not all countries on both data frames are in c
 ```{r full_join, warning = FALSE}
 head(full_join(second_df, my_gap, by = "country")) %>% 
   kable()
+``` 
 
+To know the dimension if result:
+
+```{r full_join_dim, warning = FALSE}
 dim(full_join(second_df, my_gap, by = "country"))
 ```
 
@@ -198,7 +201,11 @@ nrow(second_df) + nrow(my_gap) - 127
 ```{r inner_join, warning = FALSE}
 head(inner_join(second_df, my_gap, by = "country")) %>% 
   kable()
+```
 
+To know the dimesion of result
+
+```{r inner_join_dim, warning = FALSE}
 dim(inner_join(second_df, my_gap, by = "country"))
 ```
 
@@ -208,7 +215,11 @@ As `inner_join` keeps only rows that has the same country in both data frames, t
 ```{r left_join, warning = FALSE}
 head(left_join(second_df, my_gap, by = "country")) %>% 
   kable()
+```
 
+To know the dimension of result
+
+```{r left_join_dim, warning = FALSE}
 dim(left_join(second_df, my_gap, by = "country"))
 ```
 
@@ -218,7 +229,11 @@ As `left_join` keeps all rows of the first passed data frame, the dimension of t
 ```{r right_join, warning = FALSE}
 head(right_join(second_df, my_gap, by = "country")) %>% 
   kable()
+```
 
+To know the dimension of result
+
+```{r right_join_dim, warning = FALSE}
 dim(right_join(second_df, my_gap, by = "country"))
 ```
 
