@@ -1835,6 +1835,8 @@ NA
 </tr>
 </tbody>
 </table>
+Now, is time to go the join exercise!
+
 ### Join Prompts (join, merge, look up)
 
 **Problem**: You have two data sources and you need info from both in one new data object.

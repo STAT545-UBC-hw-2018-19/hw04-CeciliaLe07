@@ -137,6 +137,7 @@ Then, for reshaping it in order to have one row per year, We can use do the same
 spread(table, key="country",value="lifeExp") %>% 
   kable()
 ```
+Now, is time to go the join exercise!
 
 ### Join Prompts (join, merge, look up)
 
