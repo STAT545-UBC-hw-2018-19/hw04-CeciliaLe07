@@ -2,6 +2,12 @@ Homework 04: Tidy data and joins
 ================
 Cecilia Leon
 
+-   [The Assignment](#the-assignment)
+    -   [Data Reshaping Prompts (and relationship to aggregation)](#data-reshaping-prompts-and-relationship-to-aggregation)
+    -   [Join Prompts (join, merge, look up)](#join-prompts-join-merge-look-up)
+
+All dependencies used for this exercises:
+
 The Assignment
 --------------
 
@@ -33,7 +39,7 @@ In this case, gapminder is presented in **untidy** format and we need to convert
 | key       | country |
 | value     | lifeExp |
 
-This is an example of two countries wich are Mexico and Canada
+This is an example of two countries wich are *Mexico* and *Canada*
 
 ``` r
 gapminder %>% 
@@ -192,13 +198,13 @@ Mexico
 </tr>
 </tbody>
 </table>
-But we can do this by n different countries, in the following example, the filter criteria will change to the countries of Americas:
+But we can do this for n different countries. In next example, the filter criteria will change to the countries of Americas:
 
 ``` r
 Americas_reshape <- gapminder %>% 
                       filter(continent == "Americas") %>% 
                       select(c("year","country","lifeExp")) %>% 
-                      spread(key="country", value = "lifeExp") 
+                      spread(key = "country", value = "lifeExp") 
 
 Americas_reshape%>%
   kable()
@@ -1250,16 +1256,19 @@ Venezuela
 </tr>
 </tbody>
 </table>
-Now we can take advantage of this new data shape for showing the evolution of life expectancy from 1952 to 2007 in the an especific country:
+Now we can take advantage of this new data shape for showing the evolution of life expectancy from 1952 to 2007 in a specific country:
 
 ``` r
 Americas_reshape %>% 
   ggplot(aes(year,Cuba)) +
-  geom_line(col="skyblue") +
-  geom_point(col="slateblue", alpha = 0.5) +
+  geom_line(col = "skyblue") +
+  geom_point(col = "slateblue", alpha = 0.5) +
   ggtitle("Time series of life Expectancy of Cuba") +
   xlab("Year") +
-  ylab("Life Expectancy\n(in years)")
+  ylab("Life Expectancy\n(in years)") +
+  theme(text = element_text(size = 11, 
+                            color = "darkblue")
+        )
 ```
 
 ![](hw04-CeciliaLe07_files/figure-markdown_github/Activity%202%20Graph%201-1.png)
@@ -1268,20 +1277,24 @@ This new shape could be useful in case we want to built a function that draws th
 
 <!-- Using aes_string instead of aes is very useful for applied ggplot in functions, to know this I consulted the next link: https://stackoverflow.com/questions/15458526/r-pass-variable-column-indices-to-ggplot2 -->
 ``` r
-#This funcion recives as input the name of certain country which is desired to know the life expectancy behaviour since 1952 to 2007 and generates the corresponding graph.
+#This funcion recives as input the name of certain country which is desired to know the life 
+#expectancy behaviour since 1952 to 2007 and generates the corresponding graph.
 
 draw_life_expectancy <- function(my_country){
   Americas_reshape %>% 
   ggplot(aes_string("year",my_country)) +
-  geom_line(col="skyblue") +
-  geom_point(col="slateblue", alpha = 0.5) +
+  geom_line(col = "skyblue") +
+  geom_point(col = "slateblue", alpha = 0.5) +
   ggtitle(paste("Time series of life Expectancy of",my_country)) +
   xlab("Year") +
-  ylab("Life Expectancy\n(in years)")
+  ylab("Life Expectancy\n(in years)") +
+  theme(text = element_text(size = 11, 
+                          color = "darkblue")
+      )
 }
 ```
 
-For instance, the outpout of previous function applied to Brazil is:
+For instance, the output of previous function applied to *Brazil* is:
 
 ``` r
 draw_life_expectancy("Brazil")
@@ -1289,7 +1302,7 @@ draw_life_expectancy("Brazil")
 
 ![](hw04-CeciliaLe07_files/figure-markdown_github/Example_Brazil-1.png)
 
-The output for Argentina is:
+The output for *Argentina* is:
 
 ``` r
 draw_life_expectancy("Argentina")
@@ -1301,17 +1314,17 @@ draw_life_expectancy("Argentina")
 
 -   In [Window functions](http://stat545.com/block010_dplyr-end-single-table.html#window-functions), we formed a tibble with 24 rows: 2 per year, giving the country with both the lowest and highest life expectancy (in Asia). Take that table (or a similar one for all continents) and reshape it so you have one row per year or per year \* continent combination.
 
-The table for Asia was:
+The table for *Asia* was:
 
 ``` r
-table <- gapminder %>%
-  filter(continent == "Asia") %>%
-  select(year, country, lifeExp) %>%
-  group_by(year) %>%
-  filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
-  arrange(year)
+Asia_rank_lifeexp <- gapminder %>%
+                        filter(continent == "Asia") %>%
+                        select(year, country, lifeExp) %>%
+                        group_by(year) %>%
+                        filter(min_rank(desc(lifeExp)) < 2 | min_rank(lifeExp) < 2) %>% 
+                        arrange(year)
 
-table %>% 
+Asia_rank_lifeexp %>% 
   kable()
 ```
 
@@ -1596,7 +1609,7 @@ Japan
 </tr>
 </tbody>
 </table>
-Then, for reshaping it in order to have one row per year, We can use do the same process as in the previous exercise using following parameters:
+Then, for reshaping it in order to have one row per year, we can use do the same process as in the previous exercise using following parameters:
 
 | Paramater | Value   |
 |-----------|---------|
@@ -1604,7 +1617,7 @@ Then, for reshaping it in order to have one row per year, We can use do the same
 | value     | lifeExp |
 
 ``` r
-spread(table, key="country",value="lifeExp") %>% 
+spread(Asia_rank_lifeexp, key = "country",value = "lifeExp") %>% 
   kable()
 ```
 
@@ -1854,7 +1867,9 @@ Now, is time to go the join exercise!
 The second data frame we are going to use was obtained at [this link](https://www.kaggle.com/folaraz/world-countries-and-continents-details/version/3#_=_), it has one row per country and is in csv format, so we can use `read_csv` command:
 
 ``` r
-#In this case, if the following line is desired to be run, it is necessary to download the Countries Longitude and Latitude.csv file and change to the corresponding path
+#In this case, if the following line is desired to be run, it is necessary to download 
+#the "Countries Longitude and Latitude.csv" file and change to the corresponding path
+
 second_df <- read_csv("C:\\Users\\Cecy\\Documents\\UBC\\Term 1\\545\\hw04-CeciliaLe07\\Countries Longitude and Latitude.csv")
 ```
 
@@ -1889,24 +1904,29 @@ str(second_df)
     ##   .. ..- attr(*, "class")= chr  "collector_guess" "collector"
     ##   ..- attr(*, "class")= chr "col_spec"
 
-As we can see, the second data frame has 4 variables wich called: X1, longitud, latitude and name. Furthemore this data frame owns 249 observation that corresponds to data of different countries. First of all, we are going to check how many countries are in common between `my_gap` and `second_df`.
+As we can see, the second data frame has 4 variables called: **X1**, **longitud**, **latitude** and **name**. Furthemore, this data frame owns 249 observations that correspond to data of different countries. To make the reasoning easier, we only will use data of 2007 in gapminder, loaded in the object called `my_gap`.
 
 ``` r
-#To make the reasoning easier, we only will use data of 2007 in gapminder
 my_gap <- gapminder %>% 
   filter(year == "2007")
+```
 
+First of all, we are going to check how many countries are in common between `my_gap` and `second_df`.
+
+``` r
 #Renaming columns on second_df
 colnames(second_df)<-c("x","longitud","latitude","country")
+
+#Chenking how many countries are in the both data frames
 sum(second_df$country %in% my_gap$country)
 ```
 
     ## [1] 127
 
-As we can see, there are 127 countries on the second data frame that are also on `my_gap`. The following table shows what are these countries:
+As we can see, there are **127 countries** on the second data frame that are also on `my_gap`. The following table shows 10 of these countries:
 
 ``` r
-second_df$country[second_df$country %in% my_gap$country] %>% 
+head(second_df$country[second_df$country %in% my_gap$country],10) %>% 
   kable(col.names=c("Common countries"))
 ```
 
@@ -1969,594 +1989,11 @@ Bangladesh
 Belgium
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-Benin
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Bolivia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Botswana
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Brazil
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Bulgaria
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Burkina Faso
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Burundi
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cambodia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cameroon
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Canada
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Central African Republic
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Chad
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Chile
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-China
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Colombia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Comoros
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Costa Rica
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Croatia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Cuba
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Czech Republic
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Denmark
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Djibouti
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Dominican Republic
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Ecuador
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Egypt
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-El Salvador
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Equatorial Guinea
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Eritrea
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Ethiopia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Finland
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-France
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Gabon
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Gambia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Germany
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Ghana
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Greece
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Guatemala
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Guinea
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Guinea-Bissau
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Haiti
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Honduras
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Hungary
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Iceland
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-India
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Indonesia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Iran
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Iraq
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Ireland
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Israel
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Italy
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Jamaica
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Japan
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Jordan
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Kenya
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Kuwait
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Lebanon
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Lesotho
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Liberia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Libya
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Madagascar
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Malawi
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Malaysia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mali
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mauritania
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mauritius
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mexico
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mongolia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Montenegro
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Morocco
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Mozambique
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Myanmar
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Namibia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Nepal
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Netherlands
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-New Zealand
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Nicaragua
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Niger
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Nigeria
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Norway
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Oman
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pakistan
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Panama
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Paraguay
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Peru
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Philippines
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Poland
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Portugal
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Puerto Rico
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Romania
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Rwanda
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Saudi Arabia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Senegal
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Serbia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sierra Leone
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Singapore
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Slovenia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Somalia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-South Africa
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Spain
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sri Lanka
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sudan
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Swaziland
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Sweden
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Switzerland
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Syria
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Taiwan
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Tanzania
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Thailand
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Togo
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Tunisia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Turkey
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Uganda
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Uruguay
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Venezuela
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Vietnam
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Zambia
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Zimbabwe
-</td>
-</tr>
 </tbody>
 </table>
 It is very important to know that not all countries on both data frames are in common, since this fact will change the results of a join declaration. Let's illutatre this:
+
+**Full join**
 
 ``` r
 head(full_join(second_df, my_gap, by = "country")) %>% 
@@ -2780,13 +2217,15 @@ dim(full_join(second_df, my_gap, by = "country"))
 
     ## [1] 264   9
 
-As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has 264 rows. This quantity should correspond to the sum of the number of rows of each data frame. We can check that statement by:
+As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has **264 rows**. This quantity should correspond to the sum of the number of rows of each data frame. We can check that statement by:
 
 ``` r
 nrow(second_df) + nrow(my_gap) - 127
 ```
 
     ## [1] 264
+
+**Inner join**
 
 ``` r
 head(inner_join(second_df, my_gap, by = "country")) %>% 
@@ -3010,7 +2449,9 @@ dim(inner_join(second_df, my_gap, by = "country"))
 
     ## [1] 127   9
 
-As `inner_join` keeps only rows that has the same country in both data frames, the dimension of this joined data frame indicates it has 127 rows. We deducted this quantity when checked the number of common countries between tibbles.
+As `inner_join` keeps only rows that has the same country in both data frames, the dimension of this joined data frame indicates it has **127 rows**. We deducted this quantity when checked the number of common countries between tibbles.
+
+**Left join**
 
 ``` r
 head(left_join(second_df, my_gap, by = "country")) %>% 
@@ -3234,7 +2675,9 @@ dim(left_join(second_df, my_gap, by = "country"))
 
     ## [1] 249   9
 
-As `left_join` keeps all rows of the first passed data frame, the dimension of this joined data frame indicates it has 249 rows. This quantity corresponds to the number of rows in `second_df`.
+As `left_join` keeps all rows of the first passed data frame, the dimension of this joined data frame indicates it has **249 rows**. This quantity corresponds to the number of rows in `second_df`.
+
+**Right join**
 
 ``` r
 head(right_join(second_df, my_gap, by = "country")) %>% 
@@ -3458,9 +2901,9 @@ dim(right_join(second_df, my_gap, by = "country"))
 
     ## [1] 142   9
 
-As `rigth_join` keeps all rows of the second passed data frame, the dimension of this joined data frame indicates it has 142 rows. This quantity corresponds to the number of rows in `my_gap`.
+As `rigth_join` keeps all rows of the second passed data frame, the dimension of this joined data frame indicates it has **142 rows**. This quantity corresponds to the number of rows in `my_gap`.
 
-**Some observations:** The previous exercises helped us to understand the importance of knowing the differences between these kind of join commands, since we need to decide what is the correct function depending on the data we want to illustrate. For example:
+**Some observations:** The previous exercises helped us to understand the importance of knowing the difference between these kind of join commands, since we need to decide what is the correct function depending on the data we want to illustrate. For example:
 
 -   If we want to graph the life expectancy by country in a map by the location of each country, we need to ensure all records on data frame have the longitud, latitud and life expectancy variables (*inner\_join*).
 
