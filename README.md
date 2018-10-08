@@ -18,6 +18,10 @@ Furthermore, these are the main sources I used:
 + To use ggplot2 inside a function: 
   
   https://stackoverflow.com/questions/15458526/r-pass-variable-column-indices-to-ggplot2
+  
++ To modify size and color of font in ggplot using `theme()`
+  
+  https://rpubs.com/gbonafe/ggplot2-font
 
 <p align="center">
 <img src="https://media.giphy.com/media/26AHyxxCItIbFijLO/giphy.gif" width="300" height="150"/>
