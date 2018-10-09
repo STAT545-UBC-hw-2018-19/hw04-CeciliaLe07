@@ -9,7 +9,7 @@ always_allow_html: yes
   
 All dependencies used for this exercises:
 
-```{r setup, include=FALSE}
+```{r setup, warning = FALSE}
 library(tidyverse)
 library(ggplot2)
 library(gapminder)
@@ -214,7 +214,7 @@ To know the dimension of result:
 dim(full_join(second_df, my_gap, by = "country"))
 ```
 
-As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has **264 rows**. This quantity should correspond to the sum of the number of rows of each data frame. We can check that statement by:
+As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has **264 rows**. This quantity should correspond to the sum of the number of rows of each data frame minus the number of rows with the same country. We can check that statement by:
 
 ```{r check_full_join, warning = FALSE}
 nrow(second_df) + nrow(my_gap) - 127

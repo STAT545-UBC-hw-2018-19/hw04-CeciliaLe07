@@ -8,6 +8,29 @@ Cecilia Leon
 
 All dependencies used for this exercises:
 
+``` r
+library(tidyverse)
+```
+
+    ## -- Attaching packages ---------------------------------- tidyverse 1.2.1 --
+
+    ## v ggplot2 2.2.1     v purrr   0.2.4
+    ## v tibble  1.4.2     v dplyr   0.7.4
+    ## v tidyr   0.8.0     v stringr 1.3.0
+    ## v readr   1.1.1     v forcats 0.3.0
+
+    ## -- Conflicts ------------------------------------- tidyverse_conflicts() --
+    ## x dplyr::filter() masks stats::filter()
+    ## x dplyr::lag()    masks stats::lag()
+
+``` r
+library(ggplot2)
+library(gapminder)
+library(knitr)
+library(kableExtra)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 The Assignment
 --------------
 
@@ -2217,7 +2240,7 @@ dim(full_join(second_df, my_gap, by = "country"))
 
     ## [1] 264   9
 
-As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has **264 rows**. This quantity should correspond to the sum of the number of rows of each data frame. We can check that statement by:
+As `full_join` keeps all rows of both data frames, the dimension of this joined data frame indicates it has **264 rows**. This quantity should correspond to the sum of the number of rows of each data frame minus the number of rows with the same country. We can check that statement by:
 
 ``` r
 nrow(second_df) + nrow(my_gap) - 127
